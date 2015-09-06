@@ -12,3 +12,6 @@ thead tr th {
   font-size: 20px;
   font-weight: 700;
 }
+.over {
+  border: 2px dashed #000 !important;
+}

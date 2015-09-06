@@ -14,6 +14,7 @@ var tableJSON;
 function refreshData(){
     tableJSON = new table(JSON.parse(localStorage.getItem("users")));
 }
+
 if(!tableJSON){
   refreshData();
 }
@@ -25,7 +26,6 @@ if(!tableJSON){
  * @constructor
  */
 function table(tableData) {
-  console.log(tableData);
   if(!tableData){
     tableData = [];
   }
@@ -38,7 +38,14 @@ function table(tableData) {
   this.render = function(){
     $('tbody').empty();
     this.displayedData.forEach(function (row) {
-      $('tbody').append('<tr>');
+      $('tbody')
+      .append('<tr draggable="true"'+
+        ' ondragstart="onDragStart(event)"'+
+        ' ondragleave = "onDragLeave(event)"'+
+        ' ondragover= "onDragOver(event)"'+
+        ' ondragenter= "onDragEnter(event)"'+
+        ' ondragend= "onDragEnd(event)"'+
+        ' ondrop="onDrop(event)">');
       for (var key in row) {
         if (row.hasOwnProperty(key)) {
           $('tbody tr:last').append( '<td>' + row[key] + '</td>');
@@ -84,11 +91,13 @@ table.prototype.sort = function(params){
  */
 table.prototype.filter = function(){
   var status = document.getElementById("search").value;
-  this.displayedData = this.tableData.map(function(transaction){
-    console.log(transaction);
-    if(transaction.paymentStatus.toUpperCase().indexOf(status.toUpperCase())>-1){
-      return transaction;
+  this.displayedData = this.tableData.map(function(row){
+    for(var key in row){
+      if(row[key].toUpperCase().indexOf(status.toUpperCase())>-1){
+        return row;
+      }
     }
+    
   });
   this.render();
 };
@@ -138,3 +147,44 @@ function previousPage (table){
   table.pageNumber--;
   table.paginate();
 };
+
+
+function onDrop(e) {
+  console.log(e);
+  e.preventDefault();
+  var text = e.dataTransfer.getData("text/plain");
+  e.dataTransfer.setData("Text/Plain",text);
+  console.log(e.dataTransfer.getData('Text'));
+}
+
+function onDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault(); 
+  }
+
+  e.dataTransfer.dropEffect = 'copy'; 
+
+  return false;
+}
+
+function onDragStart(e) {
+  e.target.style.opacity = '0.4';
+  dragSrcEl = this;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData("text/html", e.target.textContent);
+}
+
+function onDragEnter(e) {
+  e.target.parentElement.classList.add('over');
+  e.target.innerHTML = event.dataTransfer.getData('Text');
+}
+
+function onDragLeave(e) {
+  e.target.parentElement.classList.remove('over'); 
+}
+
+function onDragEnd(e) {
+  console.log(e.dataTransfer.getData('text/html'));
+  dragSrcEl = this.innerHTML;
+  e.target.innerHTML = '<td>'+ event.dataTransfer.getData('text/html')+'</td>';
+}
