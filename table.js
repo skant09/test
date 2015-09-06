@@ -45,10 +45,10 @@ function table(tableData) {
         ' ondragover= "onDragOver(event)"'+
         ' ondragenter= "onDragEnter(event)"'+
         ' ondragend= "onDragEnd(event)"'+
-        ' ondrop="onDrop(event)">');
+        ' ondrop="onDropTarget(event)">');
       for (var key in row) {
         if (row.hasOwnProperty(key)) {
-          $('tbody tr:last').append( '<td>' + row[key] + '</td>');
+          $('tbody tr:last').append( '<td><div ondrop="onDropTarget(event)">' + row[key] + '</div></td>');
         }
       }
     });
@@ -149,12 +149,14 @@ function previousPage (table){
 };
 
 
-function onDrop(e) {
+function onDropTarget(e) {
   console.log(e);
   e.preventDefault();
-  var text = e.dataTransfer.getData("text/plain");
+
+  var text = e.dataTransfer.getData("text");
+  e.target.innerHTML = text;
   e.dataTransfer.setData("Text/Plain",text);
-  console.log(e.dataTransfer.getData('Text'));
+  console.log(text);
 }
 
 function onDragOver(e) {
@@ -171,11 +173,16 @@ function onDragStart(e) {
   e.target.style.opacity = '0.4';
   dragSrcEl = this;
   e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData("text/html", e.target.textContent);
+  event.dataTransfer.setData("Text", e.target.textContent);
+  console.log(event.dataTransfer.files);
+  console.log(event.dataTransfer.types);
+  console.log(event.dataTransfer.getData('Text'));
 }
 
 function onDragEnter(e) {
   e.target.parentElement.classList.add('over');
+  var text = event.dataTransfer.getData('Text');
+  console.log(text);
   e.target.innerHTML = event.dataTransfer.getData('Text');
 }
 
@@ -184,7 +191,7 @@ function onDragLeave(e) {
 }
 
 function onDragEnd(e) {
-  console.log(e.dataTransfer.getData('text/html'));
+  console.log(e.dataTransfer.files);
   dragSrcEl = this.innerHTML;
   e.target.innerHTML = '<td>'+ event.dataTransfer.getData('text/html')+'</td>';
 }

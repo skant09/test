@@ -26,7 +26,7 @@ function checkForm(form, account) {
 
   if (account.pwd1.value != "" && account.pwd1.value == account.pwd2.value) {
     if (!checkPassword(account.pwd1.value)) {
-      alert("The password you have entered is not valid!");
+      alert("The password you have entered is not valid. It should contain one numerics, one small letter and one capital letter");
       account.pwd1.focus();
       return false;
     }
