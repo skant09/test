@@ -11,70 +11,64 @@
 </head>
 
 <body class="container-fluid content" style="margin: 2% 5%;">
-  <div id="example-form">
-    <div>
-      <h3>Account</h3>
-      <form name="Account">
-        <fieldset class="form-group">
-          
-          <label for="userName">User name *</label>
-          <input id="userName" name="userName" type="Email" class="form-control" required>
-          
-          <label for="telephone">Telephone *</label>
-          <input id="telephone" name="telephone" type="tel" class="form-control" required>
-          
-          <label for="password">Password *</label>
-          <input id="password" name="pwd1" type="password" class="form-control" required>
-          
-          <label for="confirm">Confirm Password *</label>
-          <input id="confirm" name="pwd2" type="password" class="form-control" required>
-          
-          <label for="Date">Confirm Password *</label>
-          <input id="Date" name="date" type="date" class="form-control" required>
-          
-          <p>(*) Mandatory</p>
-          <input type="button" onclick="checkForm(form, Account);" value="submit">
-        </fieldset>
-      </form>
-    </div>
-  </div>
-  <div id="table">
-    <div class="row">
-      <h1>Form Data</h1>
-    </div>
-    <form class="row form-inline" style="margin-bottom: 10px;">
-      <div id="pageNumber" class="pull-right">
-        <label></label>
+  <div class="row">
+    <div id="example-form" class="col-lg-6 col-md-6">
+      <div>
+        <h1>Account</h1>
+        <form name="Account">
+          <fieldset class="form-group">
+            <label for="userName">User name *</label>
+            <input id="userName" name="userName" type="Email" class="form-control" required>
+            <label for="telephone">Telephone *</label>
+            <input id="telephone" name="telephone" type="tel" class="form-control" required>
+            <label for="password">Password *</label>
+            <input id="password" name="pwd1" type="password" class="form-control" required>
+            <label for="confirm">Confirm Password *</label>
+            <input id="confirm" name="pwd2" type="password" class="form-control" required>
+            <label for="Date">Date *</label>
+            <input id="Date" name="date" type="date" class="form-control" required>
+            <p>(*) Mandatory</p>
+            <input type="button" onclick="checkForm(form, Account);" value="submit">
+          </fieldset>
+        </form>
       </div>
-      <div class="form-group-sm">
-        <label>Search by Form status</label>
-        <input id="search" class="form-control" type="text" oninput="tableJSON.filter(status)" />
-      </div>
-    </form>
-    <div class="row text-center">
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th ondblclick="tableJSON.sort('paymentId');" draggable="true">Payment Id</th>
-            <th ondblclick="tableJSON.sort('orderDate');" draggable="true">Order Date</th>
-            <th ondblclick="tableJSON.sort('merchatId');" draggable="true">Merchant Id</th>
-            <th ondblclick="tableJSON.sort('customerEmail');" draggable="true">Customer Email</th>
-            <th ondblclick="tableJSON.sort('amount');" draggable="true">Amount</th>
-            <th ondblclick="tableJSON.sort('paymentStatus');" draggable="true">Payment Status</th>
-          </tr>
-        </thead>
-        <tbody class="table-striped">
-          <tr></tr>
-        </tbody>
-      </table>
     </div>
-    <div class="row">
-      <button id="nextPage" class="pull-right btn btn-sm btn-primary" onclick="nextPage(tableJSON)">Next</button>
-      <button id="previousPage" class="pull-left btn btn-sm btn-primary" onclick="previousPage(tableJSON)">Previous</button>
-      <form class="center-block form-group-sm" style="margin-left: 25%; display: inline-flex;">
-        <label>Number of rows</label>
-        <input id="itemPerPage" class="form-control" oninput="tableJSON.paginate()" type="number" min="1" />
+    <div id="table" class="col-lg-6 col-md-6">
+      <div class="row">
+        <h1>Form Data</h1>
+      </div>
+      <form class="row form-inline" style="margin-bottom: 10px;">
+        <div id="pageNumber" class="pull-right">
+          <label></label>
+        </div>
+        <div class="form-group-sm">
+          <label>Search by Form status</label>
+          <input id="search" class="form-control" type="text" oninput="tableJSON.filter(status)" />
+        </div>
       </form>
+      <div class="row text-center">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th ondblclick="tableJSON.sort('email');" draggable="true">User Name</th>
+              <th ondblclick="tableJSON.sort('telephone');" draggable="true">Telephone</th>
+              <th ondblclick="tableJSON.sort('password');" draggable="true">Password</th>
+              <th ondblclick="tableJSON.sort('date');" draggable="true">Date</th>
+            </tr>
+          </thead>
+          <tbody class="table-striped">
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button id="nextPage" class="pull-right btn btn-sm btn-primary" onclick="nextPage(tableJSON)">Next</button>
+        <button id="previousPage" class="pull-left btn btn-sm btn-primary" onclick="previousPage(tableJSON)">Previous</button>
+        <form class="center-block form-group-sm" style="margin-left: 25%; display: inline-flex;">
+          <label>Number of rows</label>
+          <input id="itemPerPage" class="form-control" oninput="tableJSON.paginate()" type="number" min="1" />
+        </form>
+      </div>
     </div>
   </div>
   <script src="./table.js"></script>

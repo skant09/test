@@ -1,14 +1,22 @@
-var tableJSON;
-
+/**
+ *  Author: Suryakant
+ */
 /**
  * Ajax call for fetching local data stored in table.json
  */
-$.when($.ajax('table.json'))
-        .then(function (success) {
-          tableJSON = new table(success.tableData);
-        }, function (error) {
-          console.log(error);
-        });
+// $.when($.ajax('table.json'))
+//         .then(function (success) {
+//           tableJSON = new table(success.tableData);
+//         }, function (error) {
+//           console.log(error);
+//         });
+var tableJSON;
+function refreshData(){
+    tableJSON = new table(JSON.parse(localStorage.getItem("users")));
+}
+if(!tableJSON){
+  refreshData();
+}
 
 
 /**
@@ -17,6 +25,10 @@ $.when($.ajax('table.json'))
  * @constructor
  */
 function table(tableData) {
+  console.log(tableData);
+  if(!tableData){
+    tableData = [];
+  }
 
   this.tableData = tableData;
   this.displayedData = tableData;
